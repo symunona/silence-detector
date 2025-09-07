@@ -1,27 +1,57 @@
-<?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
- "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
-<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
- width="512.000000pt" height="512.000000pt" viewBox="0 0 512.000000 512.000000"
- preserveAspectRatio="xMidYMid meet">
-<metadata>
-Created by potrace 1.16, written by Peter Selinger 2001-2019
-</metadata>
-<g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
-fill="#777" stroke="none">
-<path d="M3445 3323 c-99 -63 -252 -177 -414 -311 -386 -319 -519 -418 -801
--597 -509 -323 -588 -375 -564 -375 27 0 416 224 574 330 47 32 123 81 170
-110 119 73 250 171 350 261 47 42 186 154 310 249 252 195 416 325 425 339 12
-21 -12 17 -50 -6z"/>
-<path d="M2719 3103 l-34 -38 38 34 c20 19 37 36 37 38 0 8 -8 0 -41 -34z"/>
-<path d="M3399 2828 c-262 -158 -651 -443 -1169 -858 -193 -154 -346 -272
--453 -349 -48 -35 -90 -67 -93 -72 -10 -17 105 4 176 33 61 25 96 49 190 133
-63 56 122 110 130 120 42 50 474 374 695 522 83 55 223 144 311 199 124 76
-167 108 187 139 15 22 51 67 82 99 30 33 55 67 55 78 0 10 -2 18 -4 18 -2 0
--50 -28 -107 -62z"/>
-<path d="M3441 2369 c-130 -58 -426 -242 -604 -376 -241 -181 -349 -276 -747
--658 -168 -160 -339 -323 -381 -361 -100 -90 -280 -281 -219 -232 25 20 95 61
-155 91 237 119 426 264 895 686 52 48 97 88 100 91 3 3 41 35 84 70 44 36 95
-79 115 96 54 47 239 192 323 252 333 240 348 253 348 317 0 51 -4 53 -69 24z"/>
-</g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.0"
+   width="512.000000pt"
+   height="512.000000pt"
+   viewBox="0 0 512.000000 512.000000"
+   preserveAspectRatio="xMidYMid meet"
+   id="svg4"
+   sodipodi:docname="favicon.svg"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="namedview4"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="pt"
+     showguides="false"
+     inkscape:zoom="0.63134766"
+     inkscape:cx="472.79814"
+     inkscape:cy="582.88012"
+     inkscape:window-width="1848"
+     inkscape:window-height="1058"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4" />
+  <metadata
+     id="metadata1">&#10;Created by potrace 1.16, written by Peter Selinger 2001-2019&#10;</metadata>
+  <g
+     transform="matrix(0.18880057,0,0,-0.18880057,-225.06481,640.14797)"
+     fill="#777777"
+     stroke="none"
+     id="g4">
+    <path
+       d="m 3445,3323 c -99,-63 -252,-177 -414,-311 -386,-319 -519,-418 -801,-597 -509,-323 -588,-375 -564,-375 27,0 416,224 574,330 47,32 123,81 170,110 119,73 250,171 350,261 47,42 186,154 310,249 252,195 416,325 425,339 12,21 -12,17 -50,-6 z"
+       id="path1" />
+    <path
+       d="m 2719,3103 -34,-38 38,34 c 20,19 37,36 37,38 0,8 -8,0 -41,-34 z"
+       id="path2" />
+    <path
+       d="m 3399,2828 c -262,-158 -651,-443 -1169,-858 -193,-154 -346,-272 -453,-349 -48,-35 -90,-67 -93,-72 -10,-17 105,4 176,33 61,25 96,49 190,133 63,56 122,110 130,120 42,50 474,374 695,522 83,55 223,144 311,199 124,76 167,108 187,139 15,22 51,67 82,99 30,33 55,67 55,78 0,10 -2,18 -4,18 -2,0 -50,-28 -107,-62 z"
+       id="path3" />
+    <path
+       d="m 3441,2369 c -130,-58 -426,-242 -604,-376 -241,-181 -349,-276 -747,-658 -168,-160 -339,-323 -381,-361 -100,-90 -280,-281 -219,-232 25,20 95,61 155,91 237,119 426,264 895,686 52,48 97,88 100,91 3,3 41,35 84,70 44,36 95,79 115,96 54,47 239,192 323,252 333,240 348,253 348,317 0,51 -4,53 -69,24 z"
+       id="path4" />
+  </g>
 </svg>
