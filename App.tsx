@@ -7,26 +7,28 @@ import CountdownPie from './components/CountdownPie';
 
 const SETTINGS_KEY = 'silenceDetectorSettings';
 
+const defaultSettings = {
+  threshold: 0.1,
+  silenceDuration: 10,
+  visualDelay: 2,
+  countBackwards: true,
+  selectedDeviceId: 'default',
+};
+
 const loadSettings = () => {
   try {
     const item = window.localStorage.getItem(SETTINGS_KEY);
     const settings = item ? JSON.parse(item) : {};
     return {
-      threshold: settings.threshold ?? 0.05,
-      silenceDuration: settings.silenceDuration ?? 10,
-      visualDelay: settings.visualDelay ?? 1,
-      countBackwards: settings.countBackwards ?? false,
-      selectedDeviceId: settings.selectedDeviceId ?? 'default',
+      threshold: settings.threshold ?? defaultSettings.threshold,
+      silenceDuration: settings.silenceDuration ?? defaultSettings.silenceDuration,
+      visualDelay: settings.visualDelay ?? defaultSettings.visualDelay,
+      countBackwards: settings.countBackwards ?? defaultSettings.countBackwards,
+      selectedDeviceId: settings.selectedDeviceId ?? defaultSettings.selectedDeviceId,
     };
   } catch (error) {
     console.error("Error reading settings from localStorage", error);
-    return {
-      threshold: 0.05,
-      silenceDuration: 10,
-      visualDelay: 1,
-      countBackwards: false,
-      selectedDeviceId: 'default',
-    };
+    return defaultSettings;
   }
 };
 
