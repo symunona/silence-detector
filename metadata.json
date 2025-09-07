@@ -1,0 +1,7 @@
+{
+  "name": "Silence Detector",
+  "description": "A tool that listens to your microphone and starts a timer when it detects silence. Useful for timing pauses in speech, presentations, or recordings.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
