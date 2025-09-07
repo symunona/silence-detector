@@ -40,4 +40,4 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           source: "dist/*"
-          target: ${{ secrets.SSH_TARGET_DIR }}
+          target: ${{ env.SSH_TARGET_DIR }}
