@@ -40,23 +40,20 @@ export default function App() {
   
   // Settings State
   const [showSettings, setShowSettings] = useState(false);
-  const [threshold, setThreshold] = useState(loadSettings().threshold);
-  const [silenceDuration, setSilenceDuration] = useState(loadSettings().silenceDuration);
-  const [visualDelay, setVisualDelay] = useState(loadSettings().visualDelay);
-  const [countBackwards, setCountBackwards] = useState(loadSettings().countBackwards);
+  
+  // Load settings from localStorage once on initial render.
+  const initialSettings = useMemo(() => loadSettings(), []);
+
+  const [threshold, setThreshold] = useState(initialSettings.threshold);
+  const [silenceDuration, setSilenceDuration] = useState(initialSettings.silenceDuration);
+  const [visualDelay, setVisualDelay] = useState(initialSettings.visualDelay);
+  const [countBackwards, setCountBackwards] = useState(initialSettings.countBackwards);
   const [audioDevices, setAudioDevices] = useState<AudioDevice[]>([]);
-  const [selectedDeviceId, setSelectedDeviceId] = useState(loadSettings().selectedDeviceId);
+  const [selectedDeviceId, setSelectedDeviceId] = useState(initialSettings.selectedDeviceId);
+
 
   const { start, stop, volume, error } = useMicrophone();
   const pendingSilenceTimeoutRef = useRef<number | undefined>(undefined);
-
-  useEffect(()=>{
-    if (isVisiblySilent){
-      console.log('silent')
-    } else {
-      console.log('ssss')
-    }
-  }, [isVisiblySilent])
 
   // Save settings to localStorage whenever they change
   useEffect(() => {
@@ -80,14 +77,15 @@ export default function App() {
     setSilenceCounter(0);
     setIsTimerFinished(false);
 
-    console.log('!!?', visualDelay)  
     clearTimeout(pendingSilenceTimeoutRef.current);
     pendingSilenceTimeoutRef.current = window.setTimeout(() => {    
-      console.log('!!!')  
       setIsVisiblySilent(true);
+      setIsSilent(false);
+      setSilenceCounter(1);
+      setIsTimerFinished(false);
     }, visualDelay * 1000);
 
-  }, []);
+  }, [visualDelay]);
 
   useEffect(() => {
     const getDevices = async () => {
@@ -183,11 +181,11 @@ export default function App() {
   // Timer effect
   useEffect(() => {
     let timerId: number | undefined;
-    if (isListening && isSilent && !isTimerFinished) {
+    if (isListening && isSilent && isVisiblySilent && !isTimerFinished) {
       timerId = window.setInterval(() => {
         setSilenceCounter(prev => {
           const nextCount = prev + 1;
-          if (nextCount >= silenceDuration) {
+          if (nextCount > silenceDuration) {
             setIsTimerFinished(true);
             if(timerId) clearInterval(timerId);
             return silenceDuration;
@@ -199,12 +197,12 @@ export default function App() {
     return () => {
       if (timerId) clearInterval(timerId);
     };
-  }, [isListening, isSilent, isTimerFinished, silenceDuration]);
+  }, [isListening, isSilent, isVisiblySilent, isTimerFinished, silenceDuration]);
 
   const backgroundClass = useMemo(() => {
     if (!isListening) return 'from-gray-700 to-gray-800';
-    if (isVisiblySilent) return 'from-red-700 to-red-900';
     if (isTimerFinished) return 'from-green-700 to-green-900';
+    if (isVisiblySilent) return 'from-red-700 to-red-900';
     return 'from-gray-700 to-gray-800';
   }, [isListening, isVisiblySilent, isTimerFinished]);
   
@@ -239,22 +237,13 @@ export default function App() {
     }
 
     return (
-      <div className="flex flex-col items-center justify-center h-full">
-        <CountdownPie
-          silenceCounter={silenceCounter}
-          silenceDuration={silenceDuration}
-          countBackwards={countBackwards}
-          isTimerFinished={isTimerFinished}
-          isSilent={isSilent}
-        />
-        <button 
-          onClick={handleStop} 
-          className="mt-16 bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-6 rounded-full shadow-lg transition-transform transform hover:scale-105 active:scale-100 flex items-center"
-        >
-            <StopIcon className="w-5 h-5 mr-2" />
-            Stop
-        </button>
-      </div>
+      <CountdownPie
+        silenceCounter={silenceCounter}
+        silenceDuration={silenceDuration}
+        countBackwards={countBackwards}
+        isTimerFinished={isTimerFinished}
+        isSilent={isSilent}
+      />
     );
   };
 
@@ -289,6 +278,17 @@ export default function App() {
       )}
       
       {renderContent()}
+
+      {isListening && (
+        <button 
+          onClick={handleStop} 
+          className="group absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center rounded-full border border-white bg-transparent px-8 py-3 font-bold text-white shadow-lg transition-all duration-300 transform hover:scale-105 hover:bg-white/20 active:scale-100"
+          aria-label="Stop listening"
+        >
+            <StopIcon className="mr-2 h-6 w-6 transition-transform group-hover:rotate-90" />
+            <span className="text-lg">Stop</span>
+        </button>
+      )}
     </main>
   );
 }
