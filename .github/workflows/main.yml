@@ -32,12 +32,17 @@ jobs:
         run: npm run build
 
       # Step 5: Copy the build output to the server via SCP
-      - name: Deploy to server
-        uses: appleboy/scp-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          source: "dist/*"
-          target: ${{ env.SSH_TARGET_DIR }}
+      - name: Deploy to server via SCP
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_TARGET_DIR: ${{ env.SSH_TARGET_DIR }}
+        run: |
+          echo "$SSH_KEY" > key.pem
+          chmod 600 key.pem
+          scp -i key.pem -P $SSH_PORT -r dist/* $SSH_USERNAME@$SSH_HOST:$SSH_TARGET_DIR
+          rm key.pem
+
+
