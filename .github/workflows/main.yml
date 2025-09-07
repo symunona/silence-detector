@@ -1,0 +1,43 @@
+name: Deploy Vite App via SSH
+
+# This workflow is triggered on pushes to the 'main' branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # Step 3: Install project dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4: Build the Vite application for production
+      - name: Build project
+        run: npm run build
+
+      # Step 5: Copy the build output to the server via SCP
+      - name: Deploy to server
+        uses: appleboy/scp-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          source: "dist/*"
+          target: ${{ secrets.SSH_TARGET_DIR }}
