@@ -105,7 +105,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
             step="0.01"
             value={threshold}
             onChange={(e) => setThreshold(parseFloat(e.target.value))}
-            className="relative w-full h-full bg-transparent appearance-none cursor-pointer accent-cyan-400"
+            className="absolute top-0 left-0 h-full w-full h-full bg-transparent appearance-none cursor-pointer accent-cyan-400"
           />
         </div>
         <div className="text-xs text-gray-400 text-center">{(threshold * 100).toFixed(0)}%</div>
