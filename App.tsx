@@ -248,7 +248,8 @@ export default function App() {
                   Arguments make our lives hard<br/> 
                   Talking, not feeling heard.<br/>
                   Space is here to help!<br/>
-                  Just wait more after the other spoke<br/>
+                  Just wait a bit after each curve.<br/><br/>
+                  
                   Watch the magic happen!
                 </p>
           </div>
