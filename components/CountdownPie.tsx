@@ -32,6 +32,7 @@ const CountdownPie: React.FC<CountdownPieProps> = ({
 
   const initialDisplay = countBackwards ? silenceDuration : 0;
 
+  const isReset = silenceCounter === 0;
   return (
     <div className="relative w-64 h-64 sm:w-80 sm:h-80">
       <svg className="w-full h-full" viewBox="0 0 120 120">
@@ -57,8 +58,12 @@ const CountdownPie: React.FC<CountdownPieProps> = ({
           strokeDashoffset={strokeDashoffset}
           strokeLinecap="round"
           transform="rotate(-90 60 60)"
-          className={`${strokeColor} transition-all`}
-          style={{ transitionProperty: 'stroke-dashoffset, color', transitionDuration: '1s', transitionTimingFunction: 'linear' }}
+          className={`${strokeColor}${!isReset ? ' transition-all' : ''}`}
+          style={
+            !isReset
+              ? { transitionProperty: 'stroke-dashoffset, color', transitionDuration: '1s', transitionTimingFunction: 'linear' }
+              : { transitionProperty: 'stroke-dashoffset, color', transitionDuration: '0.2s', transitionTimingFunction: 'linear' }
+          }
         />
         <text
           x="50%"
