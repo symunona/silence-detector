@@ -107,6 +107,20 @@ export default function App() {
     }
   }, [selectedDeviceId]);
 
+
+  // Listen when settings panel is opened, but don't trigger silence detection
+  useEffect(() => {
+    if (showSettings && !isListening) {
+      getDevices().then(() => {
+        start(selectedDeviceId);
+      });
+    }
+    // Stop mic when settings panel closes and not actively listening
+    if (!showSettings && !isListening) {
+      stop();
+    }
+  }, [showSettings, isListening, getDevices, start, stop, selectedDeviceId]);
+
   const handleListen = useCallback(() => {
     getDevices().then(() => {
       start(selectedDeviceId).then(() => {

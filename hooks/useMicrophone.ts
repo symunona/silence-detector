@@ -16,11 +16,12 @@ export const useMicrophone = (): MicrophoneHook => {
   const streamRef = useRef<MediaStream | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const sourceNodeRef = useRef<MediaStreamAudioSourceNode | null>(null);
-  const animationFrameIdRef = useRef<number>(0);
+  const intervalIdRef = useRef<number | null>(null);
 
   const stop = useCallback(() => {
-    if (animationFrameIdRef.current) {
-      cancelAnimationFrame(animationFrameIdRef.current);
+    if (intervalIdRef.current) {
+      clearInterval(intervalIdRef.current);
+      intervalIdRef.current = null;
     }
     if (streamRef.current) {
       streamRef.current.getTracks().forEach(track => track.stop());
@@ -50,7 +51,7 @@ export const useMicrophone = (): MicrophoneHook => {
       
       const dataArray = new Uint8Array(analyserRef.current.frequencyBinCount);
 
-      const updateVolume = () => {
+      intervalIdRef.current = window.setInterval(() => {
         if (analyserRef.current) {
           analyserRef.current.getByteTimeDomainData(dataArray);
           let sumSquares = 0.0;
@@ -63,9 +64,7 @@ export const useMicrophone = (): MicrophoneHook => {
           const scaledRms = Math.min(rms * 4, 1.0);
           setVolume(scaledRms);
         }
-        animationFrameIdRef.current = requestAnimationFrame(updateVolume);
-      };
-      animationFrameIdRef.current = requestAnimationFrame(updateVolume);
+      }, 30); // update every 100ms
 
     } catch (err) {
       if (err instanceof Error) {
