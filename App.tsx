@@ -89,39 +89,32 @@ export default function App() {
 
   }, [visualDelay]);
 
-  useEffect(() => {
-    const getDevices = async () => {
-      try {
-        // Dummy call to get permissions first
-        await navigator.mediaDevices.getUserMedia({ audio: true });
-        const devices = await navigator.mediaDevices.enumerateDevices();
-        const audioInputDevices = devices
-          .filter(device => device.kind === 'audioinput')
-          .map((device, i) => ({ id: device.deviceId, label: device.label || `Microphone ${i + 1}` }));
-        setAudioDevices(audioInputDevices);
-
-        // After fetching devices, check if the loaded device ID is still valid.
-        const savedDeviceExists = audioInputDevices.some(device => device.id === selectedDeviceId);
-
-        // If the saved device is not found, default to the first available one.
-        if (audioInputDevices.length > 0 && !savedDeviceExists) {
-            setSelectedDeviceId(audioInputDevices[0].id);
-        }
-      } catch (err) {
-        console.error("Could not enumerate audio devices:", err);
+  const getDevices = useCallback(async () => {
+    try {
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const audioInputDevices = devices
+        .filter(device => device.kind === 'audioinput')
+        .map((device, i) => ({ id: device.deviceId, label: device.label || `Microphone ${i + 1}` }));
+      setAudioDevices(audioInputDevices);
+      const savedDeviceExists = audioInputDevices.some(device => device.id === selectedDeviceId);
+      if (audioInputDevices.length > 0 && !savedDeviceExists) {
+        setSelectedDeviceId(audioInputDevices[0].id);
       }
-    };
-    getDevices();
-     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    } catch (err) {
+      console.error("Could not enumerate audio devices:", err);
+    }
+  }, [selectedDeviceId]);
 
   const handleListen = useCallback(() => {
-    start(selectedDeviceId).then(() => {
+    getDevices().then(() => {
+      start(selectedDeviceId).then(() => {
         setIsListening(true);
         setShowSettings(false);
         resetSilenceState();
+      });
     });
-  }, [start, selectedDeviceId, resetSilenceState]);
+  }, [getDevices, start, selectedDeviceId, resetSilenceState]);
 
 
   const handleStop = useCallback(() => {
@@ -256,7 +249,10 @@ export default function App() {
     >
       <div className="absolute top-4 right-4 z-10">
         <button 
-            onClick={() => setShowSettings(!showSettings)}
+            onClick={async () => {
+              await getDevices();
+              setShowSettings(!showSettings);
+            }}
             className="p-3 bg-gray-700/50 rounded-full hover:bg-gray-600/70 transition-colors"
             title="Settings"
         >
