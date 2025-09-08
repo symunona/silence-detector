@@ -219,13 +219,12 @@ export default function App() {
 
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-full max-w-lg p-6 bg-gray-800/60 backdrop-blur-sm rounded-lg border border-gray-600 text-center mx-4">
               <p className="text-gray-300 mb-4 text-sm sm:text-base text-left">
-                  When arguing, leave space after the other person speaks. <br/>This helps:
+                  Arguments make our lives hard<br/> 
+                  Talking, not feeling heard.<br/>
+                  Space is here to help!<br/>
+                  Just wait more after the other spoke<br/>
+                  Watch the magic happen!<br/>
               </p>
-              <ul className="text-left list-disc list-inside text-gray-400 space-y-1 text-sm sm:text-base">
-                <li>The other person to feel heard.</li>
-                <li>You to reflect instead of reacting emotionally.</li>
-                <li>Arguments to become more constructive.</li>
-              </ul>
           </div>
         </>
       );
