@@ -201,11 +201,11 @@ export default function App() {
     };
   }, [isListening, isSilent, isVisiblySilent, isTimerFinished, silenceDuration]);
 
-  const backgroundClass = useMemo(() => {
-    if (!isListening) return 'from-gray-700 to-gray-800';
-    if (isTimerFinished) return 'from-green-700 to-green-900';
-    if (isVisiblySilent) return 'from-red-700 to-red-900';
-    return 'from-gray-700 to-gray-800';
+  const backgroundColor = useMemo(() => {
+    if (!isListening) return '#374151'; // gray-700
+    if (isTimerFinished) return '#15803d'; // green-700
+    if (isVisiblySilent) return '#b91c1c'; // red-700
+    return '#374151';
   }, [isListening, isVisiblySilent, isTimerFinished]);
   
   const renderContent = () => {
@@ -250,7 +250,10 @@ export default function App() {
   };
 
   return (
-    <main className={`relative w-full h-screen text-white bg-gradient-to-b ${backgroundClass} flex items-center justify-center p-4 transition-colors duration-500`}>
+    <main
+      className="relative w-full h-screen text-white flex items-center justify-center p-4 transition-colors duration-500"
+      style={{ backgroundColor, transition: 'background-color 1s' }}
+    >
       <div className="absolute top-4 right-4 z-10">
         <button 
             onClick={() => setShowSettings(!showSettings)}
