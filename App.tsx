@@ -92,6 +92,7 @@ export default function App() {
   const getDevices = useCallback(async () => {
     try {
       await navigator.mediaDevices.getUserMedia({ audio: true });
+      
       const devices = await navigator.mediaDevices.enumerateDevices();
       const audioInputDevices = devices
         .filter(device => device.kind === 'audioinput')
@@ -205,6 +206,17 @@ export default function App() {
     if (!isListening) {
       return (
         <>
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 0,
+            pointerEvents: 'none',
+            opacity: 0.1,
+            background: 'center/contain no-repeat url("/speaking.svg")',
+          }}
+        />
+        <>
           <div className="flex flex-col items-center justify-center">
             <button
               onClick={handleListen}
@@ -217,15 +229,16 @@ export default function App() {
             {error && <p className="text-red-400 mt-4 text-center">{error}</p>}
           </div>
 
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-full max-w-lg p-6 bg-gray-800/60 backdrop-blur-sm rounded-lg border border-gray-600 text-center mx-4">
-              <p className="text-gray-300 mb-4 text-sm sm:text-base text-left">
+            <div className="absolute top-8 left-1/2 -translate-x-1/2 w-full max-w-xs p-6 text-center mx-2">
+                <p className="text-center text-gray-300 mb-4 text-sm sm:text-base text-left pb-0">
                   Arguments make our lives hard<br/> 
                   Talking, not feeling heard.<br/>
                   Space is here to help!<br/>
                   Just wait more after the other spoke<br/>
-                  Watch the magic happen!<br/>
-              </p>
+                  Watch the magic happen!
+                </p>
           </div>
+        </>
         </>
       );
     }
@@ -241,6 +254,40 @@ export default function App() {
     );
   };
 
+  const Footer = () => (
+    <footer
+      style={{
+        position: 'absolute',
+        bottom: '1rem',
+        right: '1rem',
+        textAlign: 'right',
+        padding: 0,
+        fontSize: '0.9rem',
+        color: '#888',
+        background: 'none',
+        border: 'none',
+        zIndex: 20,
+      }}
+    >
+      <a
+        href="https://github.com/symunona/silence-detector"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hover:text-white transition-colors"
+      >
+        gh
+      </a>
+      <a
+        className="ml-2 hover:text-white transition-colors"
+        href="https://tmpx.space"
+        target="_blank"
+      >
+        tmPx
+      </a>
+    </footer>
+  );
+  
+
   return (
     <main
       className="relative w-full h-screen text-white flex items-center justify-center p-4 transition-colors duration-500"
@@ -255,7 +302,7 @@ export default function App() {
             className="p-3 bg-gray-700/50 rounded-full hover:bg-gray-600/70 transition-colors"
             title="Settings"
         >
-          <GearIcon className="w-6 h-6" />
+          <GearIcon className="w-6 h-6 text-gray-400" />
         </button>
       </div>
 
@@ -289,6 +336,8 @@ export default function App() {
             <span className="text-lg">Stop</span>
         </button>
       )}
+    <Footer />
+
     </main>
   );
 }
